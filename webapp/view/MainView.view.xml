@@ -5,12 +5,13 @@
     xmlns:core="sap.ui.core">
     <Page id="page" title="{i18n>title}">
         <content>
-            <HBox >
+            <HBox id="hBx1" >
                 <Label  id="labelEmployee" 
                         text="{i18n>labelEmployee}" 
                         class="sapUiSmallMargin"
                         labelFor="inputEmployee"/>
                 <Input  id="inputEmployee"
+                        value="{/employeeId}"
                         maxLength="10"
                         width="200px"
                         class="sapUiSmallMarginEnd"
@@ -20,11 +21,13 @@
                         class="sapUiSmallMargin"
                         labelFor="slCountry"
                         visible="false"/>
-                <Select id="slCountry" forceSelection="false" visible="false">
+                <Select id="slCountry" 
+                        selectedKey="{/countryKey}"
+                        forceSelection="false" 
+                        items="{/listCountry}"
+                        visible="false">
                     <items>
-                        <core:Item key="US" text="{i18n>countryUS}"/>
-                        <core:Item key="AR" text="{i18n>countryAR}"/>
-                        <core:Item key="ES" text="{i18n>countryES}"/>
+                        <core:Item id="slItem" key="key" text="{text}"/>
                     </items>
                 </Select>
             </HBox>
