@@ -11,25 +11,74 @@
                         class="sapUiSmallMargin"
                         labelFor="inputEmployee"/>
                 <Input  id="inputEmployee"
-                        value="{/employeeId}"
+                        value="{/EmployeeId}"
                         maxLength="10"
                         width="200px"
-                        class="sapUiSmallMarginEnd"
-                        liveChange="onValidate"/>
+                        class="sapUiSmallMarginEnd"/>
                 <Label  id="labelCountry" 
                         text="{i18n>labelCountry}" 
                         class="sapUiSmallMargin"
                         labelFor="slCountry"
-                        visible="false"/>
+                        visible="true"/>
                 <Select id="slCountry" 
-                        selectedKey="{/countryKey}"
+                        selectedKey="{/CountryKey}"
                         forceSelection="false" 
-                        items="{/listCountry}"
-                        visible="false">
+                        items="{/ListCountry}"
+                        visible="true">
                     <items>
-                        <core:Item id="slItem" key="key" text="{text}"/>
+                        <core:Item id="slItem" key="{Key}" text="{Text}"/>
                     </items>
                 </Select>
+                <Button id="btnFilter"
+                        text="{i18n>btnFilter}"
+                        icon="sap-icon://search"
+                        press="onFilter"
+                        class="sapUiSmallMarginEnd"/>
+                <Button id="btnClearFilter"
+                        text="{i18n>btnClearFilter}"
+                        icon="sap-icon://clear-filter"
+                        press="onClearFilter"
+                        class="sapUiSmallMarginEnd"/>
+            </HBox>
+            <HBox id="hBx2" >
+                <Panel id="pan1">
+                    <Table  id="tableEmployee"
+                            items="{/Employees}">
+                        <columns>
+                            <Column id="col1">
+                                <header>
+                                    <Label id="lbl1" text="{i18n>tableId}"></Label>
+                                </header>
+                            </Column>
+                            <Column id="col2">
+                                <header>
+                                    <Label id="lbl2" text="{i18n>tableName}"></Label>
+                                </header>
+                            </Column>
+                            <Column id="col3">
+                                <header>
+                                    <Label id="lbl3" text="{i18n>tableCountry}"></Label>
+                                </header>
+                            </Column>
+                            <Column id="col4">
+                                <header>
+                                    <Label id="lbl4" text="{i18n>tableCity}"></Label>
+                                </header>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem id="cli1">
+                                <cells>
+                                    <Label id="cli1Lbl1" text="{EmployeeID}"/>
+                                    <Label id="cli1Lbl2" text="{LastName}, {FirstName}"/>
+                                    <Label id="cli1Lbl3" text="{Country}"/>
+                                    <Label id="cli1Lbl4" text="{City}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </Panel>
+
             </HBox>
         </content>
     </Page>
