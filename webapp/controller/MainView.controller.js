@@ -56,6 +56,15 @@ sap.ui.define([
             oModel.setProperty("/CountryKey", "");
         }
 
+        function showPostalCode(oEvent){
+            var itemPressed = oEvent.getSource();
+            var oContext = itemPressed.getBindingContext();
+            var objectContext = oContext.getObject();
+            // dentro del  objectContext voy a tener todas las propiedades del modelo json
+            sap.m.MessageToast.show(objectContext.PostalCode);
+
+        }
+
         var Main = Controller.extend("nryzy.employees.controller.MainView", {});
         // Cuando se dispara el onValidate, llama al myCheck
         //onValidate: myCheck
@@ -77,6 +86,7 @@ sap.ui.define([
         Main.prototype.onInit = onInit;
         Main.prototype.onFilter = onFilter;
         Main.prototype.onClearFilter = onClearFilter;
+        Main.prototype.showPostalCode = showPostalCode;
 
         return Main;
     });
