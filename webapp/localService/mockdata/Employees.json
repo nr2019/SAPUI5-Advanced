@@ -1,24 +1,8 @@
 {
-    "EmployeeId": "",
-    "CountryKey": "",
-    "ListCountry": [
-        {
-            "Key": "US",
-            "Text": "United States"
-        },
-        {
-            "Key": "AR",
-            "Text": "Argentina"
-        },
-        {
-            "Key": "ES",
-            "Text": "España"
-        }
-    ],
     "Employees": [
         {
             "EmployeeID": "1",
-            "LastName": "García Lopez",
+            "LastName": "Manuel Fernandez",
             "FirstName": "María",
             "Country": "ES",
             "City": "Madrid",
