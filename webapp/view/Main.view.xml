@@ -12,7 +12,7 @@
                     <content>
                         <f:FlexibleColumnLayout id="fcl"
                                                 backgroundDesign="Solid"
-                                                layout="OneColumn">                       
+                                                layout="{jsonLayout>/ActiveKey}">                       
                             <f:beginColumnPages>
                                 <mvc:XMLView id="masterEmployeeView"
                                         viewName="nryzy.employees.view.MasterEmployee">
@@ -32,6 +32,17 @@
                             </f:endColumnPages>
                         </f:FlexibleColumnLayout>
                     </content>
+                    <footer>
+                        <Toolbar >
+                            <Label text="{i18n>layout}"
+                                    class="{sapUiSmallMargin}"/>
+                            <Select items="{jsonLayout>/Layout}"
+                                    selectedKey="{jsonLayout>/ActiveKey}">
+                                <core:Item  key="{jsonLayout>Key}"
+                                            text="{jsonLayout>Text}"></core:Item>
+                            </Select>
+                        </Toolbar>
+                    </footer>
                 </Page>
             </pages>
         </App>

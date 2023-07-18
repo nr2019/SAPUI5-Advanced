@@ -16,6 +16,8 @@ sap.ui.define([
         // Según el cíclo de vida es lo primero que se va a ejecutar en el controlador
         function onInit() {
             console.log("MasterEmployee onInit");
+            // Ver si anda o hay que splitear en 2 líneas
+            this._bus = sap.ui.getCore().getEventBus();
         }
 
         function onFilter(){
@@ -97,6 +99,16 @@ sap.ui.define([
             oJSONModelConfig.setProperty("/visibleBtnShowCity", true);
             oJSONModelConfig.setProperty("/visibleBtnHideCity", false);
         }
+
+        function showEmployee(oEvent){
+            var itemPressed = oEvent.getSource();
+            var oContext = itemPressed.getBindingContext("jsonEmployees");
+            var path = oContext.getPath();
+            // pUBLICAMOS UN EVENTO
+            this._bus.publish("flexible", "showEmployee", path);
+            
+        }
+
         var Main = Controller.extend("nryzy.employees.controller.MasterEmployee", {});
         // Cuando se dispara el onValidate, llama al myCheck
         //onValidate: myCheck
@@ -123,6 +135,7 @@ sap.ui.define([
         Main.prototype.onHideCity = onHideCity;
         Main.prototype.showOrders = showOrders;
         Main.prototype.onCloseOrders = onCloseOrders;
+        Main.prototype.showEmployee = showEmployee;
 
         return Main;
     });

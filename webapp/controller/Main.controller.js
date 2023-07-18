@@ -32,6 +32,10 @@ function (Controller, JSONModel, Filter, FilterOperator) {
             oJSONCountries.loadData("../localService/mockdata/Countries.json");
             oView.setModel(oJSONCountries, "jsonCountries");
 
+            let oJSONLayout = new JSONModel();
+            oJSONLayout.loadData("../localService/mockdata/Layout.json");
+            oView.setModel(oJSONLayout, "jsonLayout");
+
             var oJSONModelConfig = new sap.ui.model.json.JSONModel({
                 // uno por columna
                 visibleID: true,
@@ -41,7 +45,27 @@ function (Controller, JSONModel, Filter, FilterOperator) {
                 visibleBtnShowCity: true,
                 visibleBtnHideCity: false
             });
-            oView.setModel(oJSONModelConfig, "jsonConfig")
+            oView.setModel(oJSONModelConfig, "jsonConfig");
+
+            this._bus = sap.ui.getCore().getEventBus();
+            // Se suscribe al evento que se dispara en masterEmployee y lo resuelve con showEmployeeDetails
+            this._bus.subscribe("flexible", "showEmployee", this.showEmployeeDetails, this);
         },
+
+        showEmployeeDetails: function(category, nameEvent, path){
+            // obtenemos la instancia de la vista llamada en Main.View.xml
+            var oView = this.getView();
+            var detailView = oView.byId("detailEmployeeView");
+            detailView.bindElement("jsonEmployees>" + path);
+            
+            var modelLayout = oView.getModel("jsonLayout");
+            // el activeKey es el valor actual del combo box. Si lo cambiamos, cambia el layout
+            modelLayout.setProperty("/ActiveKey", "TwoColumnsMidExpanded");
+
+            var incidenceModel = new sap.ui.model.json.JSONModel([]);
+            detailView.setModel(incidenceModel, "incidenceModel");
+            // para que cuando cambiemos de ítem no arrastre los valores anteriores
+            detailView.byId("tableIncidence").removeAllContent();
+        }
     });
 });
