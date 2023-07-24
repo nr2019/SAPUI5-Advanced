@@ -62,7 +62,8 @@ sap.ui.define([
             // obtener el controller seleccionado
             var iconPressed = oEvent.getSource();
             // contexto desde el modelo
-            var oContext = iconPressed.getBindingContext("jsonEmployees");
+            //var oContext = iconPressed.getBindingContext("jsonEmployees");
+            var oContext = iconPressed.getBindingContext("odataNorthwind");
 
             //hay que chequear si no está creado porque puede hacer click más de una vez
             if(!this._oDialogOrders){
@@ -72,7 +73,8 @@ sap.ui.define([
             };
 
             // Dialog Binding al contexto para tener acceso a los datos del ítem seleccionado
-            var bind = "jsonEmployees>" + oContext.getPath();
+            //var bind = "jsonEmployees>" + oContext.getPath();
+            var bind = "odataNorthwind>" + oContext.getPath();
             this._oDialogOrders.bindElement(bind);
             this._oDialogOrders.open();
         };
@@ -102,7 +104,8 @@ sap.ui.define([
 
         function showEmployee(oEvent){
             var itemPressed = oEvent.getSource();
-            var oContext = itemPressed.getBindingContext("jsonEmployees");
+            //var oContext = itemPressed.getBindingContext("jsonEmployees");
+            var oContext = itemPressed.getBindingContext("odataNorthwind");
             var path = oContext.getPath();
             // pUBLICAMOS UN EVENTO
             this._bus.publish("flexible", "showEmployee", path);

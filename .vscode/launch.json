@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Start-Employees",
+      "name": "Run Employees",
       "cwd": "${workspaceFolder}",
       "runtimeArgs": [
         "fiori",
@@ -22,11 +22,8 @@
       "internalConsoleOptions": "openOnSessionStart",
       "outputCapture": "std",
       "env": {
-        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/employees\"}",
-        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"destination\":\"Northwind\",\"path\":\"/V2\"}]",
         "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
-        "FIORI_TOOLS_UI5_VERSION": "1.115.1",
-        "FIORI_TOOLS_UI5_URI": "https://ui5.sap.com"
+        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/employees\"}"
       }
     }
   ]

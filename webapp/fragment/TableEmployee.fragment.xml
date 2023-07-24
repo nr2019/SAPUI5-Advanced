@@ -11,7 +11,7 @@
             visible="{jsonConfig>/visibleBtnHideCity}"
             press="onHideCity"/>
         <Table  id="tableEmployee"
-                items="{jsonEmployees>/Employees}">
+                items="{odataNorthwind>/Employees}">
             <columns>
                 <Column id="col1"
                         visible="{jsonConfig>/visibleID}">
@@ -50,10 +50,10 @@
                                 type="Navigation"
                                 press="showEmployee">
                     <cells>
-                        <Label id="cli1Lbl1" text="{jsonEmployees>EmployeeID}"/>
-                        <Label id="cli1Lbl2" text="{jsonEmployees>LastName}, {jsonEmployees>FirstName}"/>
-                        <Label id="cli1Lbl3" text="{jsonEmployees>Country}"/>
-                        <Label id="cli1Lbl4" text="{jsonEmployees>City}"/>
+                        <Label id="cli1Lbl1" text="{odataNorthwind>EmployeeID}"/>
+                        <Label id="cli1Lbl2" text="{odataNorthwind>LastName}, {odataNorthwind>FirstName}"/>
+                        <Label id="cli1Lbl3" text="{odataNorthwind>Country}"/>
+                        <Label id="cli1Lbl4" text="{odataNorthwind>City}"/>
                         <core:Icon  src="sap-icon://show"
                                     press="showOrders"/>
                     </cells>

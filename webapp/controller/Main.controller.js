@@ -56,7 +56,7 @@ function (Controller, JSONModel, Filter, FilterOperator) {
             // obtenemos la instancia de la vista llamada en Main.View.xml
             var oView = this.getView();
             var detailView = oView.byId("detailEmployeeView");
-            detailView.bindElement("jsonEmployees>" + path);
+            detailView.bindElement("odataNorthwind>" + path);
             
             var modelLayout = oView.getModel("jsonLayout");
             // el activeKey es el valor actual del combo box. Si lo cambiamos, cambia el layout
