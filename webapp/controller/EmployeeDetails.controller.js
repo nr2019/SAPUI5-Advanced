@@ -6,6 +6,9 @@ sap.ui.define([
 
     function onInit() {
         console.log("EmployeeDetails onInit");
+        this._bus = sap.ui.getCore().getEventBus();
+        // Se suscribe al evento que se dispara en masterEmployee y lo resuelve con showEmployeeDetails
+        //this._bus.subscribe("flexible", "showEmployee", this.showEmployeeDetails, this);
     };
 
     function onCreateIncidence(){
@@ -49,6 +52,17 @@ sap.ui.define([
         
     }
 
+    function onSaveIncidence(oEvent){
+        var rowIncidenceSource = oEvent.getSource();
+        var rowIncidenceParent = rowIncidenceSource.getParent();
+        var incidence = rowIncidenceParent.getParent();
+        var incidenceRow = incidence.getBindingContext("incidenceModel");
+        // publicamos el evento incidence de la función onSaveIncidence enviando el objeto incidenceRow
+        // como el sPath puede venir con /0 /1 /unnumero, reemplazamos la barra por nada, 
+        // ya que solo hay que mandar un número
+        this._bus.publish("incidence", "onSaveIncidence", {incidenceRow : incidenceRow.sPath.replace('/', '')});
+    }
+
     var EmployeeDetails = Controller.extend("nryzy.employees.controller.EmployeeDetails", {});
 
     EmployeeDetails.prototype.onInit = onInit;
@@ -57,6 +71,7 @@ sap.ui.define([
     // El "f"ormatter es lo que tenemos acá
     EmployeeDetails.prototype.Formatter = formatter;
     EmployeeDetails.prototype.onDeleteIncidence = onDeleteIncidence;
+    EmployeeDetails.prototype.onSaveIncidence = onSaveIncidence;
     
     return EmployeeDetails;
 
