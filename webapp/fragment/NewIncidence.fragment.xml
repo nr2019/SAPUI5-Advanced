@@ -8,7 +8,7 @@
                                   ${incidenceModel>Type} === '1' ? 'sap-icon://alert' :
                                   ${incidenceModel>Type} === '2' ? 'sap-icon://decline' : '' }"/>
                 <Title text="{i18n>incidence} 
-                            {incidenceModel>IncidenceId} 
+                            {= ${incidenceModel>IncidenceId} ? parseInt(${incidenceModel>IncidenceId}) : ''} 
                             {path : 'incidenceModel>CreationDate',
                             formatter: '.Formatter.dateFormat'}"></Title>
                 <ToolbarSpacer />

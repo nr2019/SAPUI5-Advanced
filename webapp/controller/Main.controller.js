@@ -75,6 +75,8 @@ sap.ui.define([
                 detailView.setModel(incidenceModel, "incidenceModel");
                 // para que cuando cambiemos de ítem no arrastre los valores anteriores
                 detailView.byId("tableIncidence").removeAllContent();
+
+                this.onReadODataIncidence(this._detailEmployeeView.getBindingContext("odataNorthwind").getObject().EmployeeID);
             },
 
             onSaveODataIncidence: function (channelId, eventId, data) {
@@ -95,6 +97,9 @@ sap.ui.define([
                     }
                     this.getView().getModel("incidenceModel").create("/IncidentsSet", body, {
                         success: function () {
+                            // se actualiza el nro de incidente. como es asíncrona se utiliza el bind(this)
+                            this.onReadODataIncidence.bind(this)(employeeId);
+                            // mensaje OK
                             sap.m.MessageToast.show(oResourceBundle.getText("odataSaveOk"));
                         }.bind(this),
                         error: function (e) {
@@ -104,6 +109,37 @@ sap.ui.define([
                 } else {
                     sap.m.MessageToast.show(oResourceBundle.getText("odataNoChanges"));
                 }
+            },
+
+            onReadODataIncidence: function (emlployeeID) {
+                this.getView().getModel("incidenceModel").read("/IncidentsSet", {
+                    filters: [
+                        new sap.ui.model.Filter("SapId", "EQ", this.getOwnerComponent().SapId),
+                        new sap.ui.model.Filter("EmployeeId", "EQ", emlployeeID.toString())
+                    ],
+                    success: function (data) {
+                        var incidenceModel = this._detailEmployeeView.getModel("incidenceModel");
+                        //Actualizamos los datos en pantalla
+                        incidenceModel.setData(data.results);
+                        var tableIncidence = this._detailEmployeeView.byId("tableIncidence");
+                        //Siempre borramos por si hace click varias veces
+                        tableIncidence.removeAllContent();
+
+                        for (var incidence in data.results) {
+                            // Acá hay que tener cuidado. si lo hago con "this" va a tomar como controlador el Main
+                            // con lo que no tenemos las funciones creadas para adeministrar los botones.
+                            // estas funciones están en EmployeeFetails.controller
+                            // por ello, toma el controlador de _detailEmpl...
+                            var newIncidence = sap.ui.xmlfragment("nryzy.employees.fragment.NewIncidence", this._detailEmployeeView.getController());
+                            this._detailEmployeeView.addDependent(newIncidence);
+                            newIncidence.bindElement("incidenceModel>/" + incidence);
+                            tableIncidence.addContent(newIncidence);
+                        }
+                    }.bind(this),
+                    error: function (e) {
+
+                    }
+                })
             }
         });
     });
