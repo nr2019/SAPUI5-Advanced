@@ -106,6 +106,32 @@ sap.ui.define([
                             sap.m.MessageToast.show(oResourceBundle.getText("odataSaveKO"));
                         }.bind(this)
                     })
+                } else if (incidenceModel[data.incidenceRow].CreationDateX ||
+                    incidenceModel[data.incidenceRow].ReasonX ||
+                    incidenceModel[data.incidenceRow].TypeX) {
+                    var body = {
+                        CreationDate: incidenceModel[data.incidenceRow].CreationDate,
+                        CreationDateX: incidenceModel[data.incidenceRow].CreationDateX,
+                        Type: incidenceModel[data.incidenceRow].Type,
+                        TypeX: incidenceModel[data.incidenceRow].TypeX,
+                        Reason: incidenceModel[data.incidenceRow].Reason,
+                        ReasonX: incidenceModel[data.incidenceRow].ReasonX
+                    };
+                    this.getView().getModel("incidenceModel").update("/IncidentsSet(IncidenceId='" + incidenceModel[data.incidenceRow].IncidenceId +
+                        "',SapId='" + incidenceModel[data.incidenceRow].SapId +
+                        "',EmployeeId='" + incidenceModel[data.incidenceRow].EmployeeId + "')", body, {
+                        success: function () {
+                            // se actualiza el nro de incidente. como es asíncrona se utiliza el bind(this)
+                            this.onReadODataIncidence.bind(this)(employeeId);
+                            // mensaje OK
+                            sap.m.MessageToast.show(oResourceBundle.getText("odataUpdateOk"));
+                        }.bind(this),
+                        error: function (e) {
+                            sap.m.MessageToast.show(oResourceBundle.getText("odataUpdateKO"));
+                        }.bind(this)
+                    });
+
+
                 } else {
                     sap.m.MessageToast.show(oResourceBundle.getText("odataNoChanges"));
                 }
