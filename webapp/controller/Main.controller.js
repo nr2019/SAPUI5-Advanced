@@ -59,6 +59,26 @@ sap.ui.define([
                 // Se suscribe al evento que se dispara el save del odata
                 this._bus.subscribe("incidence", "onSaveIncidence", this.onSaveODataIncidence, this);
 
+                // Se suscribe al evento que se dispara el delete del odata
+                // Acá en vez de nombrar la función y armarla afuera, lo hacemos todo acá adentro
+                this._bus.subscribe("incidence", "onDeleteIncidence", function (channelId, eventId, data) {
+
+                    var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                    this.getView().getModel("incidenceModel").remove("/IncidentsSet(IncidenceId='" + data.IncidenceId +
+                        "',SapId='" + data.SapId +
+                        "',EmployeeId='" + data.EmployeeId + "')", {
+                        success: function () {
+                            // se actualiza el nro de incidente. como es asíncrona se utiliza el bind(this)
+                            this.onReadODataIncidence.bind(this)(data.EmployeeId);
+                            // mensaje OK
+                            sap.m.MessageToast.show(oResourceBundle.getText("odataDeleteOk"));
+                        }.bind(this),
+                        error: function (e) {
+                            sap.m.MessageToast.show(oResourceBundle.getText("odataDeleteKO"));
+                        }.bind(this)
+                    });
+
+                }, this);
             },
 
             showEmployeeDetails: function (category, nameEvent, path) {

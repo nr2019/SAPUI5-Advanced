@@ -26,7 +26,7 @@ sap.ui.define([
     }
 
     function onDeleteIncidence(oEvent){ 
-        var oView = this.getView();
+        /*var oView = this.getView();
         var tableIncidence = oView.byId("tableIncidence");
         var rowIncidenceSource = oEvent.getSource();
         var rowIncidenceParent = rowIncidenceSource.getParent();
@@ -48,7 +48,15 @@ sap.ui.define([
         for (var j in tableIncidence.getContent()){
             tableIncidence.getContent()[j].bindElement("incidenceModel>/"+j);
 
-        }
+        }*/
+
+        var contextObj = oEvent.getSource().getBindingContext("incidenceModel").getObject();
+        // publicamos el evento delete
+        this._bus.publish("incidence", "onDeleteIncidence", {
+            IncidenceId: contextObj.IncidenceId,
+            SapId: contextObj.SapId,
+            EmployeeId: contextObj.EmployeeId           
+        });
         
     }
 
