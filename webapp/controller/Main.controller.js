@@ -2,7 +2,8 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox"
 ],
     /**
      * 
@@ -10,9 +11,10 @@ sap.ui.define([
      * @param {sap.ui.model.json.JSONModel} JSONModel
     * @param {typeof sap.ui.model.Filter} Filter
     * @param {typeof sap.ui.model.FilterOperator} FilterOperator
+    * @param {typeof sap.m.MessageBox} MessageBox
      */
 
-    function (Controller, JSONModel, Filter, FilterOperator) {
+    function (Controller, JSONModel, Filter, FilterOperator, MessageBox) {
 
         return Controller.extend("nryzy.employees.controller.Main", {
 
@@ -120,7 +122,8 @@ sap.ui.define([
                             // se actualiza el nro de incidente. como es asíncrona se utiliza el bind(this)
                             this.onReadODataIncidence.bind(this)(employeeId);
                             // mensaje OK
-                            sap.m.MessageToast.show(oResourceBundle.getText("odataSaveOk"));
+                            //sap.m.MessageToast.show(oResourceBundle.getText("odataSaveOk"));
+                            MessageBox.success(oResourceBundle.getText("odataSaveOk"));
                         }.bind(this),
                         error: function (e) {
                             sap.m.MessageToast.show(oResourceBundle.getText("odataSaveKO"));
@@ -172,6 +175,9 @@ sap.ui.define([
                         tableIncidence.removeAllContent();
 
                         for (var incidence in data.results) {
+                           data.results[incidence]._ValidateDate = true;
+                           // Acá el save nace inactivo, porque no hay modificaciones
+                           data.results[incidence].EnabledSave = false;
                             // Acá hay que tener cuidado. si lo hago con "this" va a tomar como controlador el Main
                             // con lo que no tenemos las funciones creadas para adeministrar los botones.
                             // estas funciones están en EmployeeFetails.controller

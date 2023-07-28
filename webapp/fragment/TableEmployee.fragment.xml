@@ -10,6 +10,7 @@
             text="{i18n>hideCity}"
             visible="{jsonConfig>/visibleBtnHideCity}"
             press="onHideCity"/>
+        
         <Table  id="tableEmployee"
                 items="{odataNorthwind>/Employees}">
             <columns>
@@ -38,7 +39,7 @@
                     </header>
                 </Column>
 
-                 <Column id="col5" 
+                    <Column id="col5" 
                         width="100px">
                     <header>
                         <Label id="lbl5" text="{i18n>tableShowDetails}"></Label>
@@ -60,7 +61,6 @@
                 </ColumnListItem>
             </items>
         </Table>
-
         <HBox id="ordersTable"></HBox>
     </Panel>
 </core:FragmentDefinition>

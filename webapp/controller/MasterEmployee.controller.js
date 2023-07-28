@@ -112,10 +112,21 @@ sap.ui.define([
             
         }
 
+        function toOrderDetails(oEvent){
+            // Este llamado proviene del TableOrders.fragment
+            //obtenemos order id que fue oprimido para pasarlo como parámetro
+            let orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID;
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            // RouteOrderDetails está definido en los routes del manifest
+            oRouter.navTo("RouteOrderDetails", {
+                OrderID : orderID
+            })
+        }
+
         var Main = Controller.extend("nryzy.employees.controller.MasterEmployee", {});
         // Cuando se dispara el onValidate, llama al myCheck
         //onValidate: myCheck
-        Main.prototype.onValidate = function () {
+        /*Main.prototype.onValidate = function () {
             var inputEmployee = this.byId("inputEmployee");
             var valueEmployee = inputEmployee.getValue();
 
@@ -128,7 +139,7 @@ sap.ui.define([
                 this.getView().byId("labelCountry").setVisible(false);
                 this.getView().byId("slCountry").setVisible(false);
             }
-        };
+        };*/
 
         Main.prototype.onInit = onInit;
         Main.prototype.onFilter = onFilter;
@@ -139,6 +150,8 @@ sap.ui.define([
         Main.prototype.showOrders = showOrders;
         Main.prototype.onCloseOrders = onCloseOrders;
         Main.prototype.showEmployee = showEmployee;
+        Main.prototype.toOrderDetails = toOrderDetails;
+        
 
         return Main;
     });
