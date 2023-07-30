@@ -42,6 +42,12 @@ sap.ui.define([
                     // seteada en el main como default
                     oRouter.navTo("RouteMain", true);
                 }
+            },
+
+            onClearSignature: function(oEvent){
+                let signature = this.byId("signature");
+                // Esta es la función clear que implementamos en el Signature.js
+                signature.clear();
             }
         });
 });
