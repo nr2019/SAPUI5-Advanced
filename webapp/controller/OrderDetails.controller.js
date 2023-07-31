@@ -48,6 +48,35 @@ sap.ui.define([
                 let signature = this.byId("signature");
                 // Esta es la función clear que implementamos en el Signature.js
                 signature.clear();
+            },
+
+            factoryOrderDetails: function(listId, oContext){
+                let contextObject = oContext.getObject();
+                // Acá en contextObject la propiedad currency no existe, pero yo se la puedo
+                // agregar
+                contextObject.Currency = "EUR";
+                let unitsInStock = oContext.getModel().getProperty("/Products(" + contextObject.ProductID + ")/UnitsInStock");
+                if (contextObject.Quantity <= unitsInStock) {
+                    let objectListItem = new sap.m.ObjectListItem({
+                        title: "{odataNorthwind>/Products("  + contextObject.ProductID + ")/ProductName} ({odataNorthwind>Quantity})",
+                        number: "{parts: [ {path:'odataNorthwind>UnitPrice'}, {path:'odataNorthwind>Currency'} ], type: 'sap.ui.model.type.Currency', formatOptions:{showMeasure: false}}",
+                        numberUnit: "{path:'odataNorthwind>Currency'}"
+                    });
+                    return objectListItem;
+                }else{
+                    let customListItem = new sap.m.CustomListItem({
+                        content: [ 
+                            new sap.m.Bar({
+                                contentLeft: new sap.m.Label({text: "{odataNorthwind>/Products("  + contextObject.ProductID + ")/ProductName} ({odataNorthwind>Quantity})"}),
+                                contentMiddle: new sap.m.ObjectStatus({ text: "{i18n>availableStock} {odataNorthwind>/Products(" + contextObject.ProductID + ")/UnitsInStock}", state: "Error" }),
+                                contentRight: new sap.m.Label({
+                                    text:"{parts: [ {path:'odataNorthwind>UnitPrice'}, {path:'odataNorthwind>Currency'} ], type: 'sap.ui.model.type.Currency'}"
+                                })
+                            })
+                        ]
+                    })
+                    return customListItem;
+                }
             }
         });
 });
