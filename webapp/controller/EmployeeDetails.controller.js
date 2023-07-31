@@ -1,7 +1,8 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    //"sap/ui/core/mvc/Controller",
+    "nryzy/employees/controller/Base.controller",
     "nryzy/employees/model/formatter"
-], function (Controller, formatter) {
+], function (Base, formatter) {
 
 
     function onInit() {
@@ -148,7 +149,7 @@ sap.ui.define([
         context.getModel().refresh();
     }
 
-    function toOrderDetails(oEvent){
+    /*function toOrderDetails(oEvent){
         //obtenemos order id que fue oprimido para pasarlo como parámetro
         let orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID;
         let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -156,8 +157,8 @@ sap.ui.define([
         oRouter.navTo("RouteOrderDetails", {
             OrderID : orderID
         })
-    }
-    var EmployeeDetails = Controller.extend("nryzy.employees.controller.EmployeeDetails", {});
+    }*/
+    var EmployeeDetails = Base.extend("nryzy.employees.controller.EmployeeDetails", {});
 
     EmployeeDetails.prototype.onInit = onInit;
     EmployeeDetails.prototype.onCreateIncidence = onCreateIncidence;
@@ -169,7 +170,7 @@ sap.ui.define([
     EmployeeDetails.prototype.updateIncidenceCreationDate = updateIncidenceCreationDate;
     EmployeeDetails.prototype.updateIncidenceReason = updateIncidenceReason;
     EmployeeDetails.prototype.updateIncidenceType = updateIncidenceType;
-    EmployeeDetails.prototype.toOrderDetails = toOrderDetails;
+    //EmployeeDetails.prototype.toOrderDetails = toOrderDetails;
     return EmployeeDetails;
 
 });

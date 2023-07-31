@@ -1,16 +1,16 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    //"sap/ui/core/mvc/Controller",
+    "nryzy/employees/controller/Base.controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator"
 ],
     /**
-     * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
      * @param {typeof sap.ui.model.Filter} Filter
      * @param {typeof sap.ui.model.FilterOperator} FilterOperator
      */
-    function (Controller, JSONModel, Filter, FilterOperator) {
+    function (Base, JSONModel, Filter, FilterOperator) {
         "use strict";
 
         // Según el cíclo de vida es lo primero que se va a ejecutar en el controlador
@@ -112,7 +112,7 @@ sap.ui.define([
             
         }
 
-        function toOrderDetails(oEvent){
+        /*function toOrderDetails(oEvent){
             // Este llamado proviene del TableOrders.fragment
             //obtenemos order id que fue oprimido para pasarlo como parámetro
             let orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID;
@@ -121,9 +121,9 @@ sap.ui.define([
             oRouter.navTo("RouteOrderDetails", {
                 OrderID : orderID
             })
-        }
+        }*/
 
-        var Main = Controller.extend("nryzy.employees.controller.MasterEmployee", {});
+        var Main = Base.extend("nryzy.employees.controller.MasterEmployee", {});
         // Cuando se dispara el onValidate, llama al myCheck
         //onValidate: myCheck
         /*Main.prototype.onValidate = function () {
@@ -150,7 +150,7 @@ sap.ui.define([
         Main.prototype.showOrders = showOrders;
         Main.prototype.onCloseOrders = onCloseOrders;
         Main.prototype.showEmployee = showEmployee;
-        Main.prototype.toOrderDetails = toOrderDetails;
+        //Main.prototype.toOrderDetails = toOrderDetails;
         
 
         return Main;
