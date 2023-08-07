@@ -59,6 +59,12 @@ sap.ui.define([
                 let canvas = document.querySelector("canvas");
                 try {
                     this.signaturePad = new SignaturePad(canvas);
+                    // mousedown => indica cuando "levanó el lápiz" y dejó de firmar
+                    this.signaturePad.fill = false;
+                    canvas.addEventListener("mousedown", function(){
+                        this.signaturePad.fill = true;
+                    }.bind(this));
+
                 } catch (e) {
                     console.error(e);
                 }
@@ -66,6 +72,22 @@ sap.ui.define([
             
             clear: function(){
                 this.signaturePad.clear();
+                // Limpiamos, debido a que ya no hay firma dentro del canvas
+                this.signaturePad.fill = false;
+            },
+
+            isFill : function(){
+                return this.signaturePad.fill;
+            },
+
+            getSignature: function(){
+                // toDataUrl está en la librería signature y nos devuelve la imagen en
+                // "algún formato que todavía no sé"
+                return this.signaturePad.toDataURL();
+            },
+
+            setSignature: function(signature){
+                this.signaturePad.fromDataURL(signature);
             }
         });
     });
